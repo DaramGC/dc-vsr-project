@@ -2,50 +2,40 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="DC-VSR: Spatially and Temporally Consistent Video Super-Resolution with Video Diffusion Prior">
-  <meta name="keywords" content="Video Super-Resolution, Video Diffusion Prior, Diffusion Model">
+  <meta name="description" content="ProPainter for Video Inpainting">
+  <meta name="keywords" content="ProPainter, Video Inpainting, Video Completion, Watermark Removal, Temporal Propogation">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DC-VSR for video super-resolution</title>
+  <title>Upscale-A-Video for Video Super-Resolution</title>
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+
+  </script> -->
   <style>
-    .hr {width: 100%; height: 1px; margin: 48px 0; background-color: #d6dbdf;}
-
-    .galaxy-text {
-      font-size: 48px;
-      font-weight: bold;
-      text-align: center;
-      background: linear-gradient(45deg, #00BFFF, #1E90FF, #8A2BE2); /* 하늘색 -> 파랑색 -> 보라색 */
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: galaxyAnimation 4s infinite linear alternate;
-    }
-
-    @keyframes galaxyAnimation {
-      0% {
-        background-position: 0% 50%;
-        text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
-      }
-      50% {
-        background-position: 100% 50%;
-        text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
-      }
-      100% {
-        background-position: 0% 50%;
-        text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
-      }
-    }
+  .hr {width: 100%; height: 1px; margin: 48px 0; background-color: #d6dbdf;}
   </style>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./assets/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./assets/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./assets/css/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
   <!-- custom css file  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/twentytwenty.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -55,31 +45,30 @@
     <div class="container is-max-desktop head">
       <div class="columns is-centered">
         <div class="column has-text-centered head">
-          <h1 class="galaxy-text main_title is-2 publication-title"> 
-            <span>DC-VSR</span>
+          <h1 class="title is-2 publication-title"> 
+            <span style="color: #4285F4;">Up</span><span style="color: #EA4335;">sc</span><span style="color: #FBBC05;">al</span><span style="color: #34A853;">e</span>-<span style="color: #4285F4;">A</span>-<span style="color: #EA4335;">Vi</span><span style="color: #FBBC05;">d</span><span style="color: #34A853;">eo</span><br>
           </h1>
           <h1 class="title is-3 publication-title"> 
-            Spatially and Temporally Consistent Video Super-Resolution with Video Diffusion Prior
+            Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution
           </h1>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Janghyeok Han<sup>1&#8224</sup></a>&nbsp;&nbsp;</span>
+              <a href="https://shangchenzhou.com/">Shangchen Zhou*</a>,&nbsp;&nbsp;</span>
             <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Gyujin Sim<sup>1&#8224</sup></a>&nbsp;&nbsp;</span>
+              <a href="https://pq-yang.github.io/">Peiqing Yang*</a>,&nbsp;&nbsp;</span>
             <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Geonung Kim<sup>1</sup></a>&nbsp;&nbsp;</span> 
+              <a href="https://iceclear.github.io/">Jianyi Wang</a>,&nbsp;&nbsp;</span> 
             <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Hyunseung Lee<sup>2</sup></a>&nbsp;&nbsp;</span> 
+              <a href="https://github.com/Luo-Yihang/">Yihang Luo</a>,&nbsp;&nbsp;</span> 
             <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Kyuha Choi<sup>2</sup></a>&nbsp;&nbsp;</span> 
+              <a href="https://www.mmlab-ntu.com/person/ccloy/">Chen Change Loy</a></span>
             <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Youngseok Han<sup>2</sup></a>&nbsp;&nbsp;</span> 
-            <span class="author-block">
-              <a href="https://cg.postech.ac.kr/">Sunghyun Cho<sup>1</sup></a></span> 
           </div>
+
+          
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>POSTECH,&nbsp;&nbsp;<sup>2</sup>Samsung Electronics, Visual Display Business</span>
+            <span class="author-block">S-Lab, Nanyang Technological University </span>
           </div>
 
           <!-- <div class="is-size-5 publication-authors">
@@ -87,7 +76,7 @@
           </div> -->
 
           <div class="is-size-6 publication-authors">
-            <span class="author-block"><sup>&#8224</sup>Equal contribution</span>
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
           </div>
 
           <div class="column has-text-centered">
@@ -104,7 +93,7 @@
               </span> -->
               <!-- arXiv Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2502.03502" target="_blank"
+                <a href="https://arxiv.org/abs/2312.06640" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -115,7 +104,7 @@
 
               <!-- Code Link. -->
               <span class="link-block"> 
-                <a href="https://github.com/DaramGC/DC-VSR/tree/main" target="_blank"
+                <a href="https://github.com/sczhou/Upscale-A-Video" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -124,9 +113,20 @@
                   </a>
               </span>
 
+              <!-- Demo Link. -->
+              <!-- <span class="link-block">
+                <a href="https://huggingface.co/spaces/sczhou/ProPainter" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="./assets/images/hf.png">
+                  </span>
+                  <span>Demo</span>
+                </a>
+              </span> -->
+
               <!-- Video Link. -->
               <span class="link-block">
-                <a href="https://www.youtube.com/" target="_blank"
+                <a href="https://youtu.be/b9J3lqiKnLM" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-youtube"></i>
@@ -135,6 +135,7 @@
                 </a>
               </span>
             </div>
+
           </div>
         </div>
       </div>
@@ -148,17 +149,18 @@
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
+
         <div class="item">
           <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5625">
             <div class="desc">AIGC Video</div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videosrvf008.mp4" type="video/mp4">
+                <source src="./assets/videos/000.mp4" type="video/mp4">
               </video> 
             </div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/000.mp4" type="video/mp4">
               </video> 
             </div>
           </div>
@@ -169,12 +171,12 @@
             <div class="desc">Real-World Video</div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/real02_inp.mp4" type="video/mp4">
               </video> 
             </div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/real02_out.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -185,12 +187,77 @@
             <div class="desc">AIGC Video</div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/aigc02_inp.mp4" type="video/mp4">
               </video> 
             </div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/aigc02_out.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5625">
+            <div class="desc">Real-World Video</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/real03_inp.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/real03_out.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5625">
+            <div class="desc">Real-World Video</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/real04_inp.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/real04_out.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5625">
+            <div class="desc">Old Movie Clip</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/old01_inp.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/old01_out.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5625">
+            <div class="desc">Real-World Video</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/real01_inp.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/real01_out.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -201,16 +268,17 @@
             <div class="desc">Animation Clip</div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/animation01_inp.mp4" type="video/mp4">
               </video> 
             </div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
-                <source src="./static/videos/test1.mp4" type="video/mp4">
+                <source src="./assets/videos/animation01_out.mp4" type="video/mp4">
               </video> 
             </div>
           </div>
         </div>
+
       </div>
   </div>
 </section>
@@ -280,7 +348,7 @@
             Finally, a finetuned VAE-Decoder reduces remaining flickering artifacts for low-level consistency.
           </p>
           <div class="column">
-            <img src="./static/images/interpolate_end.jpg"/>
+            <img src="./assets/images/pipeline.png" />
           </div>
         </div>
       </div>
@@ -350,10 +418,12 @@
 </footer>
 
   <!-- custom js file  -->
-  <!-- <script defer src="./static/js/fontawesome.all.min.js"></script> -->
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <!-- <script defer src="./assets/js/fontawesome.all.min.js"></script> -->
+  <script src="./assets/js/bulma-carousel.min.js"></script>
+  <script src="./assets/js/bulma-slider.min.js"></script>
+  <script src="./assets/js/index.js"></script>
+  <script src="./assets/js/jquery.event.move.js"></script>
+  <script src="./assets/js/jquery.twentytwenty.js"></script>
   <script>
   $(function(){
     $(".twentytwenty-container").twentytwenty();
